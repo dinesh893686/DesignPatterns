@@ -1,0 +1,140 @@
+Problem Set (Progressive Difficulty)
+1. Chat Room with Mediator (Concurrency + Locking)
+
+Implement a chat room mediator where multiple users can send messages.
+
+Requirements:
+
+Use ExecutorService or virtual threads to simulate users chatting concurrently.
+
+Ensure thread-safe message delivery (synchronized mediator).
+
+Extend with read-write locks for broadcasting messages.
+
+👉 Why useful: Introduces concurrency control + Mediator role as central hub.
+
+2. Ride-Hailing Dispatch System (Mediator + Kafka Simulation)
+
+Build a simplified Uber-like dispatcher:
+
+Drivers and riders talk only via the Mediator.
+
+Use BlockingQueue to simulate Kafka topics for ride requests.
+
+Riders send requests, mediator publishes to a "rideRequests" queue.
+
+Drivers poll from the queue concurrently.
+
+👉 Why useful: Mediator + Kafka-like pub/sub + multithreaded consumers.
+
+//async , future, completable future this things are not covered yet in any of the topic we should covevr this also
+
+3. Distributed Cache Synchronizer (Mediator + Redis Concepts)
+
+Imagine multiple services accessing a shared cache.
+
+Design a mediator that:
+
+Routes cache get/set requests.
+
+Uses a ConcurrentHashMap to simulate Redis.
+
+Implements locking (ReentrantLock) to avoid race conditions on writes.
+
+Extend: Add an LRU eviction policy (using LinkedHashMap + locks).
+
+👉 Why useful: Practice with concurrency primitives, cache design, Redis-style locks.
+
+4. Event-driven E-commerce Order System (Mediator + Kafka + ES)
+
+Design a system where:
+
+Orders are placed → Mediator routes events to multiple services:
+
+Inventory Service
+
+Payment Service
+
+Search Indexer Service (simulate ES update)
+
+Use Kafka topics (queues) for event passing.
+
+Each service runs in its own thread.
+
+Introduce dead-letter queue for failed payments.
+
+👉 Why useful: End-to-end event-driven architecture with concurrency + resilience.
+
+5. Stock Trading Engine (Mediator + Locking + HLD)
+
+Build a trading exchange simulator:
+
+Multiple brokers send buy/sell orders.
+
+Mediator matches orders.
+
+Use PriorityBlockingQueue to maintain order book.
+
+Use locks to ensure atomic trades.
+
+Add Kafka streams simulation for trade events to downstream analytics.
+
+Extend with ElasticSearch index for order search.
+
+👉 Why useful: Combines concurrency, locking, HLD-level event flows.
+
+6. Distributed Job Scheduler (Mediator + Concurrency + Redis Locks)
+
+Implement a scheduler like Quartz:
+
+Jobs (tasks) registered with mediator.
+
+Mediator assigns jobs to workers (threads).
+
+Add leader election logic (simulate with Redis distributed lock).
+
+Only one mediator can assign jobs at a time.
+
+Failed mediator → another instance takes over.
+
+👉 Why useful: Brings in distributed coordination + high availability.
+
+🏗️ HLD Style Problem (Interview-Ready)
+
+"Design a Notification System"
+
+Requirements:
+
+Multiple producers (services) send notifications (SMS, Email, Push).
+
+Mediator routes them to correct channels.
+
+Use Kafka for buffering.
+
+Use Redis for rate-limiting (per user).
+
+Store searchable notification logs in ElasticSearch.
+
+Make it highly concurrent (thousands of notifications/sec).
+
+👉 Why useful: This is a real-world system design interview question at FAANG/Fintech. It forces you to use Mediator + concurrency + distributed infra.
+
+✅ Plan to Practice Deeply
+
+Start small (ChatRoom, Cache).
+
+Scale up (Ride-hailing, E-commerce).
+
+Then jump into HLD + concurrency-rich design (Stock Exchange, Scheduler, Notification System).
+
+Each step, focus on:
+
+Concurrency (threads, locks, atomicity).
+
+Resilience (dead-letter, retries).
+
+Scalability (Kafka, Redis, ES).
+
+Clean design (Mediator + SOLID).
+
+Do you want me to pick one of these (say the E-commerce Order System) and write a step-by-step implementation roadmap in Java (like what classes, what mediator responsibilities, where Kafka fits, etc.)? That way you can start coding it out.
