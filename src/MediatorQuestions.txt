@@ -138,3 +138,56 @@ Scalability (Kafka, Redis, ES).
 Clean design (Mediator + SOLID).
 
 Do you want me to pick one of these (say the E-commerce Order System) and write a step-by-step implementation roadmap in Java (like what classes, what mediator responsibilities, where Kafka fits, etc.)? That way you can start coding it out.
+
+
+
+// async , future, completable future this things are not covered yet in any of the topic we should covevr this also
+// redis , es go in depth
+
+
+
+
+
+//////////
+
+Here’s a polished interview-ready package for that scenario:
+Functional requirements:
+Ingest new orders through a mediator component that fans out events to inventory, payment, and search indexing.
+Publish all downstream work onto Kafka topics; each service consumes its own topic and runs in an isolated worker thread.
+Payment service must emit success/failure events; failures are routed to a dead-letter topic for later retries or manual action.
+Mediator should correlate and log the overall order lifecycle so we can trace success/failure per order.
+Non-functional requirements:
+Guarantee at-least-once delivery for all topics; discuss idempotency at the consumer side.
+Ensure services can scale horizontally (partitioning strategy, consumer groups).
+Provide observability hooks: metrics for lag, success/failure counts, structured logs for tracing.
+Consider graceful degradation—what happens if one service is down?
+Security basics: topic ACLs, service authentication, sensitive data handling.
+Cross-question prompts:
+How would you design the mediator so it stays stateless yet can correlate order states?
+What Kafka partitioning/keying strategy keeps related events together without sacrificing throughput?
+How do you make consumers idempotent when processing the same event twice?
+Describe the retry policy for the payment service and how/when items leave the dead-letter queue.
+What back-pressure or rate-limiting tactics keep a slow consumer from breaking the system?
+How would you test this architecture end-to-end, including failure injection?
+How does this design evolve if we add a shipment service or analytics pipeline later?
+Hints you can offer if they stall:
+Think about correlation IDs or order IDs for tracking.
+Consider schema evolution and versioning for Kafka messages.
+Dead-letter queues are just specialized topics; talk through replay mechanics.
+Each service should acknowledge messages only after work completes successfully.
+Mention monitoring stacks (Prometheus/Grafana, ELK, OpenTelemetry) for visibility.
+Selection criteria (green flags):
+Articulates a clear mediator flow with Kafka topics and consumer responsibilities.
+Addresses idempotency, ordering, and partition strategy thoughtfully.
+Provides concrete ideas for observability, alerting, and failure recovery.
+Considers operational aspects (deployment, scaling, config management).
+Demonstrates awareness of testing strategies for distributed systems.
+Rejection criteria (red flags):
+Treats mediator as a monolith or ignores Kafka semantics (e.g., assumes exactly-once without justification).
+Fails to provide a strategy for dead-letter handling or recovery from payment failures.
+Ignores concurrency issues or data consistency/idempotency concerns.
+Omits scalability or monitoring discussion entirely.
+Gets stuck on implementation details without showing architectural thinking.
+
+
+//////////////

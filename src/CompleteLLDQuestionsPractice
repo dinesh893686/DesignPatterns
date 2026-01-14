@@ -1,0 +1,467 @@
+🧩 ADVANCED PROBLEM SET (Progressive Difficulty)
+
+Each question blends core Java, design patterns, system design, and distributed infra concepts — all in an LLD-to-HLD escalation format.
+
+1️⃣ API Gateway & Microservice Adapter (Adapter Pattern + AWS + Spring Boot)
+
+Goal: Design an API Gateway that connects multiple microservices with different response formats.
+
+Requirements:
+
+Gateway receives requests from clients (JSON/XML).
+
+Uses Adapter pattern to normalize data from different downstream services (e.g., AuthService, ProductService).
+
+Add rate limiting using Redis.
+
+Use AWS Lambda to simulate one downstream service.
+
+Add logging via an asynchronous logger (ExecutorService or CompletableFuture).
+
+👉 Why useful: You’ll understand Adapter + async communication + API normalization in distributed systems.
+Core Topics: Adapter pattern, CompletableFuture, Redis, AWS Lambda, REST design.
+
+2️⃣ Payment Gateway with Dynamic Fees (Decorator Pattern + Strategy Pattern + Kafka)
+
+Goal: Build a Payment processing pipeline.
+
+Requirements:
+
+Base PaymentProcessor handles basic card payments.
+
+Add decorators for:
+
+Logging
+
+Fee calculation (country-based)
+
+Fraud check
+
+Use Kafka to queue transactions for asynchronous processing.
+
+Store processed transactions in MySQL.
+
+Introduce database versioning for schema changes (e.g., Flyway or Liquibase migrations).
+
+👉 Why useful: Deep dive into Decorator pattern, async Kafka-based processing, and resilient transaction flow.
+Core Topics: Decorator, Kafka producers/consumers, MySQL schema design, idempotency.
+
+3️⃣ Smart Content Caching Layer (Proxy Pattern + Redis + ElasticSearch)
+
+Goal: Build a system that fetches data from ES but caches frequently accessed content in Redis.
+
+Requirements:
+
+Client fetches product details.
+
+Proxy checks Redis first.
+
+If cache miss → fetch from ES, store in Redis.
+
+Implement TTL-based cache eviction.
+
+Add metrics to monitor cache hit/miss (use AtomicInteger or Prometheus simulation).
+
+👉 Why useful: Core Proxy + caching concept + ES + Redis integration.
+Core Topics: Proxy pattern, caching, Redis TTL, ES indexing, metrics & observability.
+
+4️⃣ Hierarchical Organization Management (Composite Pattern + SQL)
+
+Goal: Design an organization structure with departments and employees.
+
+Requirements:
+
+Implement Composite pattern to represent departments containing employees or sub-departments.
+
+Store hierarchy in MySQL using adjacency list or nested set model.
+
+Write SQL queries to fetch full hierarchy (recursively).
+
+Add REST APIs to query and update hierarchy.
+
+👉 Why useful: Combines LLD (Composite) + database schema design + recursion + REST.
+Core Topics: Composite pattern, MySQL recursion (CTE), API design.
+
+5️⃣ Cloud Infrastructure Provisioning System (Facade Pattern + AWS + Terraform Simulation)
+
+Goal: Design a simplified AWS provisioning system.
+
+Requirements:
+
+Create a Facade that orchestrates:
+
+EC2 (compute)
+
+S3 (storage)
+
+RDS (database)
+
+Each subsystem is a separate class.
+
+Add concurrency: provisioning multiple services in parallel using CompletableFuture.
+
+Log results to a central dashboard (simulated DB).
+
+👉 Why useful: Facade pattern + multithreading + cloud API abstraction.
+Core Topics: Facade, CompletableFuture, AWS SDK simulation, concurrency.
+
+6️⃣ User Session Manager (Flyweight Pattern + Redis + Locking)
+
+Goal: Design a lightweight session management system.
+
+Requirements:
+
+Use Flyweight pattern to share session objects (same user attributes).
+
+Store session state in Redis with expiry.
+
+Handle concurrent session creation using ReentrantLock.
+
+Add cleanup thread to evict expired sessions.
+
+👉 Why useful: Demonstrates memory optimization, Redis session store, concurrency.
+Core Topics: Flyweight pattern, Redis expiry, locks, JVM memory management.
+
+7️⃣ Video Streaming Platform (Adapter + Proxy + Facade + Kafka + CDN)
+
+Goal: Simulate Netflix-like video delivery.
+
+Requirements:
+
+Clients request videos through a Facade.
+
+Adapter handles different encoding formats (H.264, AV1).
+
+Proxy layer caches chunks (simulate CDN).
+
+Kafka pipeline streams viewing analytics asynchronously.
+
+Store view logs in ElasticSearch for analytics dashboard.
+
+👉 Why useful: End-to-end real-world design combining multiple patterns + streaming systems.
+Core Topics: Adapter + Proxy + Facade, Kafka streams, ES indexing, scalable video delivery.
+
+8️⃣ Distributed Analytics Pipeline (Flyweight + Kafka + ES + AWS S3)
+
+Goal: Design an analytics engine like Google Analytics.
+
+Requirements:
+
+Multiple clients send event data to Kafka.
+
+Aggregator consumes events → stores summaries in ES.
+
+Large raw data dumps go to AWS S3.
+
+Use Flyweight pattern to reuse metric object templates.
+
+👉 Why useful: Introduces scalable analytics with Kafka, ES, S3, Flyweight pattern.
+Core Topics: Kafka streams, ES queries, Flyweight, S3 integration, batch vs stream.
+
+9️⃣ Online Stock Portfolio Tracker (Decorator + Observer + Redis + WebSocket)
+
+Goal: Real-time portfolio tracking system.
+
+Requirements:
+
+Each user observes price updates via Observer pattern.
+
+Use Decorator for notification enhancement (SMS + Email).
+
+Cache prices in Redis for fast lookups.
+
+Push updates to UI via WebSocket.
+
+👉 Why useful: Reactive architecture, Observer + Decorator, Redis pub/sub.
+Core Topics: Observer, Decorator, Redis pub/sub, WebSocket, real-time systems.
+
+🔟 Kubernetes Job Controller (Proxy + Mediator + AWS EKS Simulation)
+
+Goal: Simulate how K8s schedules and manages pods.
+
+Requirements:
+
+Mediator coordinates pods, nodes, and job queues.
+
+Proxy pattern simulates communication between nodes.
+
+Redis distributed lock ensures one leader scheduler.
+
+Expose metrics to Prometheus (simulate thread-safe metric updates).
+
+👉 Why useful: Realistic distributed coordination system, like Kubernetes controller manager.
+Core Topics: Mediator, Proxy, Redis locks, distributed coordination, leader election.
+
+⚙️ Bonus: 3 HLD-Level System Design Problems (for SDE-2+)
+A. “Design a Distributed Logging System (Kafka + ES + S3)”
+
+Services write logs → Kafka
+
+Consumers → ES (real-time search) + S3 (archival)
+
+Add sampling + retention policies.
+
+B. “Design WhatsApp Backend (Redis + Kafka + Sharding + Consistency)”
+
+Chat messages stored in Redis (short-term) + Cassandra/MySQL (long-term)
+
+Kafka for message delivery
+
+Use consistent hashing for chat room sharding.
+
+C. “Design an AWS CloudWatch Clone”
+
+Metrics ingestion via Kafka
+
+Time-series DB for storage
+
+Alerts with Redis rate-limiting
+
+Dashboard querying via ES.
+
+🧠 Core Java Topics You’ll Cover Along the Way
+
+Concurrency: ExecutorService, CompletableFuture, Locks, BlockingQueue
+
+JVM: Memory model, GC, thread pools
+
+Data structures: ConcurrentHashMap, LinkedHashMap (LRU), PriorityBlockingQueue
+
+I/O: NIO channels, Streams API
+
+Testing: JUnit5, Mockito, concurrent tests
+
+Would you like me to now:
+
+🧱 Create the next sheet (like your Mediator one) for Structural Patterns (Adapter → Facade) with full details — “Why useful”, “Requirements”, “Tech to include”, “Core focus”?
+
+Or 🧩 start with Problem #1 — API Gateway (Adapter Pattern) and give you a full Java class design roadmap (like what classes, interfaces, async flow, Redis role, etc.) so you can start implementing it?
+
+
+
+
+
+
+
+EXTENDED ADVANCED PROBLEM SET — “Spring + Java Mastery” (18 PROBLEMS TOTAL)
+
+11️⃣ Paginated Search API with Dynamic Filters (Spring Boot + JPA + CriteriaBuilder)
+Goal: Build a search API for cars that supports dynamic filtering and pagination.
+Requirements:
+
+
+Endpoint: /cars/search?page=1&size=10&make=Toyota&priceRange=10k-20k
+
+
+Use Spring Data Pageable and JPA CriteriaBuilder.
+
+
+Support sorting by price, name, or year.
+
+
+Add caching for frequent filters using Redis.
+
+
+Add total record count and metadata in the response.
+
+
+👉 Why useful: This covers API design, pagination, filtering, and repository customization.
+Core Topics: Pagination, JPA CriteriaBuilder, DTO projection, Redis caching.
+
+12️⃣ Employee Management API with Validation + AOP Logging (Spring Boot + Hibernate Validator)
+Goal: Create CRUD APIs for employee management.
+Requirements:
+
+
+Use @Valid annotations and custom validator for email format.
+
+
+Apply AOP logging to log input/output of all service methods.
+
+
+Global exception handler with custom ApiError response.
+
+
+Add PUT API with partial update using @PatchMapping.
+
+
+👉 Why useful: Standard Spring Boot interview task for controller-service flow + clean code practices.
+Core Topics: AOP, @ControllerAdvice, Validation, Logging.
+
+13️⃣ Product Inventory API with Optimistic Locking (Spring Boot + JPA + @Version)
+Goal: Design a product stock update API safe for concurrent updates.
+Requirements:
+
+
+Use @Version for optimistic locking in JPA.
+
+
+Add retry logic using @Retryable or custom retry with CompletableFuture.
+
+
+Log failed updates asynchronously.
+
+
+Use REST endpoint: PUT /products/{id}/stock.
+
+
+👉 Why useful: Concurrency control & transaction safety in distributed systems.
+Core Topics: Concurrency, transactions, retries, async logging.
+
+14️⃣ Lambda-driven Data Transformer (Java Streams + Functional Interfaces)
+Goal: Transform a list of orders to order summaries using lambdas.
+Requirements:
+
+
+Use Stream.map(), filter(), and Collectors.groupingBy().
+
+
+Add a functional interface DataTransformer<T, R>.
+
+
+Handle null safety and logging for skipped items.
+
+
+👉 Why useful: Real Java functional programming usage in enterprise code.
+Core Topics: Streams, Optional, Lambdas, Functional Interfaces.
+
+15️⃣ API Rate Limiting + Circuit Breaker (Resilience4j + Redis + Spring Boot)
+Goal: Create a resilient service that limits request rate and handles downstream failures.
+Requirements:
+
+
+Apply Redis-based rate limiter per user.
+
+
+Integrate Resilience4j CircuitBreaker to fallback when a downstream API fails.
+
+
+Async logs via CompletableFuture.
+
+
+👉 Why useful: Combines resilience, Redis, and async patterns.
+Core Topics: Circuit Breaker, Resilience4j, Async patterns, Redis.
+
+16️⃣ Pagination + Cursor-Based Scrolling API (Spring Boot + MongoDB)
+Goal: Implement a scalable pagination API for large datasets.
+Requirements:
+
+
+Use cursor-based pagination instead of offset pagination.
+
+
+MongoDB query with _id as cursor.
+
+
+Response includes next/previous page tokens.
+
+
+👉 Why useful: Real-world pattern for infinite scrolling / feed APIs.
+Core Topics: Pagination, MongoDB, cursor-based APIs.
+
+17️⃣ Event-Driven Email Notification System (Spring Events + Kafka)
+Goal: Send asynchronous notifications when new users register.
+Requirements:
+
+
+Use ApplicationEventPublisher and @EventListener.
+
+
+Kafka topic for scalable email processing.
+
+
+Add retry and DLQ (Dead Letter Queue).
+
+
+Store delivery logs in MySQL.
+
+
+👉 Why useful: Spring events + Kafka = powerful async microservice communication.
+Core Topics: Events, Kafka, Async processing, DLQ.
+
+18️⃣ API Response Wrapper + Exception Strategy (Spring Boot)
+Goal: Standardize all API responses and exceptions.
+Requirements:
+
+
+Define generic wrapper:
+class ApiResponse<T> {
+    private T data;
+    private String message;
+    private int statusCode;
+}
+
+
+
+Handle exceptions with @ControllerAdvice.
+
+
+Integrate with Swagger/OpenAPI documentation.
+
+
+👉 Why useful: Standard pattern for clean API design & interviews.
+Core Topics: Exception handling, ResponseEntity, Swagger, JSON structure.
+
+19️⃣ File Upload + AWS S3 Integration (Spring Boot + Multipart + AWS SDK)
+Goal: Design REST API to upload/download files.
+Requirements:
+
+
+Use @PostMapping("/upload") for Multipart upload.
+
+
+Store file in S3 and metadata in MySQL.
+
+
+Add presigned URL support for secure downloads.
+
+
+👉 Why useful: Covers multipart handling, AWS SDK, and data integrity.
+Core Topics: AWS SDK, file streams, metadata persistence.
+
+20️⃣ Bulk Import API with Parallel Processing (ExecutorService + Batch)
+Goal: Design an API to import 10k+ users from a CSV.
+Requirements:
+
+
+Read CSV in chunks.
+
+
+Use ExecutorService for multi-threaded batch inserts.
+
+
+Track failed records and log them.
+
+
+Expose progress status via /import/status.
+
+
+👉 Why useful: Large data handling, multithreading, API design.
+Core Topics: ExecutorService, batch insert, REST monitoring.
+
+🧱 Optional Add-ons for Real Depth:
+If you want even more coverage, we can add:
+
+
+21️⃣ GraphQL API design with pagination + filtering.
+
+
+22️⃣ Reactive API using WebFlux + Mono/Flux.
+
+
+23️⃣ Distributed cache invalidation across microservices (Redis pub/sub).
+
+
+24️⃣ Lambda expression–based comparator sorting challenges.
+
+
+25️⃣ Write unit tests with Mockito + concurrency tests for async methods.
+
+
+
+⚙️ Suggestion: Next Step
+Would you like me to now:
+1️⃣ Create a full roadmap & class-level breakdown for Problem #11 — “Paginated Search API with Dynamic Filters” (so you can start coding it in Spring Boot),
+OR
+2️⃣ Generate a consolidated sheet (like your Mediator one) — a “Structural Patterns + API Design” master sheet with short summaries for each problem (why, tech stack, learning outcome, etc.)?
+That way, you can follow it like a syllabus to build confidence in writing Java + Spring Boot code.

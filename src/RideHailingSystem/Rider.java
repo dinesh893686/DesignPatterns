@@ -18,7 +18,6 @@ public class Rider {
     public void cancelRide(RideRequest rideRequest) {
         mediator.cancelRide(rideRequest);
     }
-
     public String getRiderId() {
         return riderId;
     }

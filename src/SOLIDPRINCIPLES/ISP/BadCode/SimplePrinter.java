@@ -8,7 +8,7 @@ public class SimplePrinter implements Machine {
 
     @Override
     public void scan(Document doc) {
-
+  
     }
 
     @Override

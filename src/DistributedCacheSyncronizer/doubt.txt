@@ -1,0 +1,2 @@
+// no matter final block will execute
+// can one thread can get interrupted by other, if yes what is the impact

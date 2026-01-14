@@ -25,6 +25,7 @@ public class Driver implements Runnable  {
     {
         mediator.rejectRide(driverId, rideRequest.getRequestId());
     }
+    
     @Override
     public void run() {
         while(true){
@@ -50,5 +51,4 @@ public class Driver implements Runnable  {
     public boolean wantToAcceptRideRequest() {
         return  random.nextBoolean();
     }
-
 }
